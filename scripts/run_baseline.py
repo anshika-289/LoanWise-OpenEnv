@@ -22,7 +22,7 @@ def main():
         action = baseline_policy(obs)
         _, reward, _, info = env.step(action)
         total_reward += reward
-        print(f"{i+1}. {info['application_id']} -> reward={reward}")
+        print(f"{i+1}. {info['id']} -> reward={reward}")
 
     print(f"\nTotal reward: {total_reward}")
 
