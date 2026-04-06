@@ -16,5 +16,3 @@ action = LoanAction(
 next_obs, reward, done, info = env.step(action)
 
 print("\nReward:", reward)
-print("Done:", done)
-print("Info:", info)
