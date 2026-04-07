@@ -1,30 +1,66 @@
-from app.dataset import load_applications
-from app.models import LoanObservation, LoanAction
-from app.reward import compute_reward
+import random
+from pydantic import BaseModel
+from typing import Optional
 
 
-class LoanApprovalEnv:
+class LoanObservation(BaseModel):
+    application_id: str
+    credit_score: int
+    debt_to_income_ratio: float
+    fraud_flag: int
+
+
+class LoanAction(BaseModel):
+    risk_level: str
+    decision: str
+
+
+class LoanStepResult(BaseModel):
+    observation: LoanObservation
+    reward: float
+    done: bool
+
+
+class LoanEnv:
+
     def __init__(self):
-        self.applications = load_applications()
         self.current = None
 
-    def reset(self):
-        self.current = self.applications[0]
-        return self._get_observation()
+    async def reset(self):
+        self.current = {
+            "application_id": "A001",
+            "credit_score": random.randint(500, 800),
+            "debt_to_income_ratio": round(random.uniform(0.1, 0.7), 2),
+            "fraud_flag": random.choice([0, 1])
+        }
 
-    def _get_observation(self):
-        return LoanObservation(**self.current)
-
-    def step(self, action: LoanAction):
-        reward = compute_reward(
-            task_type=self.current["task_type"],
-            predicted_risk=action.risk_level,
-            predicted_decision=action.decision,
-            expected_risk=self.current["expected_risk"],
-            expected_decision=self.current["expected_decision"]
+        return LoanStepResult(
+            observation=LoanObservation(**self.current),
+            reward=0.0,
+            done=False
         )
 
-        return self._get_observation(), reward, True, {"id": self.current["application_id"]}
+    async def step(self, action: LoanAction):
 
-    def state(self):
-        return self.current
+        score = 0.0
+
+        if self.current["credit_score"] < 600 or self.current["fraud_flag"] == 1:
+            correct = "reject"
+        elif self.current["credit_score"] > 750:
+            correct = "approve"
+        else:
+            correct = "manual_review"
+
+        if action.decision == correct:
+            score = 1.0
+        else:
+            score = 0.0
+
+        return LoanStepResult(
+            observation=LoanObservation(**self.current),
+            reward=score,
+            done=True
+        )
+
+    async def close(self):
+        pass

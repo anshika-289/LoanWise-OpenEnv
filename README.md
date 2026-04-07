@@ -1,49 +1,49 @@
-# LoanWise-OpenEnv
+---
+title: LoanWise OpenEnv
+emoji: 🏦
+colorFrom: blue
+colorTo: green
+sdk: docker
+sdk_version: "latest"
+app_file: server/app.py
+pinned: false
+---
 
-LoanWise-OpenEnv is a realistic loan underwriting environment for evaluating AI agents on financial decision-making tasks.
+# 🏦 LoanWise-OpenEnv
 
-## Problem
-Banks must evaluate loan applications and balance risk vs growth.
+LoanWise-OpenEnv is a **real-world loan approval simulation environment** built using the OpenEnv framework.  
+It evaluates AI agents on financial decision-making tasks like risk assessment and loan approval.
 
-## Tasks
-1. Risk classification
-2. Loan decision
-3. Full underwriting workflow
+---
 
-## Observation Space
-Includes:
-- income
-- credit score
-- debt-to-income ratio
-- employment status
-- repayment history
+## 🚀 Features
 
-## Action Space
-Agent outputs:
-- risk_level (low/medium/high)
-- decision (approve/reject/manual_review)
-- reason (explainability)
+- ✅ Real-world loan underwriting simulation  
+- ✅ 3 tasks: Risk, Decision, Workflow  
+- ✅ Deterministic reward system  
+- ✅ OpenEnv compliant environment  
+- ✅ FastAPI-based API (`/reset`, `/step`)  
+- ✅ Dockerized for deployment  
 
-## Reward
-- correct risk: +0.3
-- correct decision: +0.4
-- correct reason: +0.1
-- wrong approval: -1.0
+---
 
-## Graders
-- Risk grader
-- Decision grader
-- Workflow grader
+## 🧠 Problem
 
-## Run Locally
-pip install -r requirements.txt
-python scripts/demo.py
+Banks must decide whether to:
+- Approve loan  
+- Reject application  
+- Send for manual review  
 
-## Docker
-docker build -t loanwise .
-docker run loanwise
+based on:
+- credit score  
+- income  
+- debt  
+- fraud signals  
 
-## Why this project?
-Simulates real-world loan underwriting used in banks and fintech.
+---
 
-Includes explainable AI + risk scoring.
+## 📥 API Endpoints
+
+### 🔹 Reset
+```bash
+POST /reset

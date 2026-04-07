@@ -1,0 +1,16 @@
+name: loanwise-openenv
+description: Loan Approval OpenEnv
+
+entrypoint: server.app:app
+
+observation_space:
+  application_id: string
+  credit_score: integer
+  debt_to_income_ratio: float
+  fraud_flag: integer
+
+action_space:
+  risk_level: string
+  decision: string
+
+reward_range: [0, 1]
