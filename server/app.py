@@ -5,6 +5,9 @@ from app.env import LoanEnv, LoanAction
 app = FastAPI()
 env = LoanEnv()
 
+@app.get("/")
+def home():
+    return {"message": "LoanWise OpenEnv is running 🚀"}
 
 @app.post("/reset")
 async def reset():
