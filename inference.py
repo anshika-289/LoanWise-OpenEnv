@@ -6,8 +6,11 @@ import json
 
 #  REQUIRED VARIABLES (but safe defaults)
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
-MODEL_NAME = os.getenv("MODEL_NAME", "dummy-model")
+MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
 HF_TOKEN = os.getenv("HF_TOKEN","dummy-token")
+
+TASK_NAME = os.getenv("MY_ENV_V4_TASK", "echo")
+BENCHMARK = os.getenv("MY_ENV_V4_BENCHMARK", "my_env_v4")
 
 SPACE_URL = os.getenv("SPACE_URL", "https://anshika-28-loanwise-openenv.hf.space")
 
